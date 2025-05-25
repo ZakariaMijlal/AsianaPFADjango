@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Projects</h2>
+    <a class="btn" href="{% url 'project-create' %}">New Project</a>
+    <ul>
+        {% for project in projects %}
+            <li>
+                <a href="{% url 'project-detail' project.pk %}">{{ project.name }}</a>
+                <ul>
+                    {% for task in tasks %}
+                        {% if task.project == project %}
+                            <li>{{ task.name }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

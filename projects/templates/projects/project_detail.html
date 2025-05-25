@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Project Detail</h2>
+    <h3>{{ project.name }}</h3>
+    <p>Description: {{ project.description }}</p>
+    <p>Start Date: {{ project.start_date }}</p>
+    <p>End Date: {{ project.end_date }}</p>
+
+    <h4>Tasks:</h4>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task.name }} - Due Date: {{ task.due_date }}
+                <p>Assigned to:
+                    {% for user in task.users.all %}
+                        {{ user.username }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <a href="{% url 'task-edit' task.pk %}" class="btn btn-secondary btn-sm">Edit Task</a>
+                <a href="{% url 'task-delete' task.pk %}" class="btn btn-danger btn-sm">Delete Task</a>
+            </li>
+        {% empty %}
+            <li>No tasks found.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'project-edit' project.pk %}" class="btn btn-primary">Edit Project</a>
+    <a href="{% url 'project-delete' project.pk %}" class="btn btn-danger">Delete Project</a>
+</div>
+{% endblock %}
